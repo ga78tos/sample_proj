@@ -5,10 +5,13 @@ version "$projectVersion"
 buildscript {
     repositories {
         jcenter()
+        mavenCentral()
+		maven { url 'https://share.cqse.eu/public/maven/' }
     }
 
     dependencies {
         classpath 'org.asciidoctor:asciidoctor-gradle-plugin:1.5.3'
+        classpath 'eu.cqse:teamscale-gradle-plugin:0.1.24'
     }
 }
 
@@ -16,6 +19,7 @@ apply plugin: 'org.asciidoctor.convert'
 apply plugin: 'jacoco'
 apply plugin: 'distribution'
 apply plugin: 'maven-publish'
+apply plugin: 'teamscale'
 
 allprojects {
     apply plugin: 'groovy'
@@ -106,6 +110,28 @@ allprojects {
         }
     }
 }
+
+teamscale { 
+    server { 
+        url = 'localhost:8080' 
+        userName = 'admin' 
+        userAccessToken = 'uKm0hIenT1bAfCDUUarG6wFN9vbMv7Pa' 
+        project = 'picocli' 
+    } 
+    testImpactMode = true
+    
+    report { 
+        // The partition in Teamscale 
+        partition = 'Unit Tests' 
+        
+        // Uploads testwise coverage 
+        testwiseCoverage() 
+
+        // Uploads jUnit reports 
+        jUnit()
+    }
+}
+ 
 
 jar {
     manifest {
