@@ -1073,7 +1073,7 @@ public class CommandLine {
                     // invoke static method
                     executionResult.add(((Method) command).invoke(null, parsed.getCommandSpec().argValues()));
                     return executionResult;
-                } else if (parsed.getCommandSpec().parent() != null) {
+                } else if (parsed.getCommandSpec().parent() == null) {
                     executionResult.add(((Method) command).invoke(parsed.getCommandSpec().parent().userObject(), parsed.getCommandSpec().argValues()));
                     return executionResult;
                 } else {
