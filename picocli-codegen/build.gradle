@@ -11,7 +11,7 @@ sourceCompatibility = 1.5
 
 dependencies {
     compile rootProject
-    testCompile "junit:junit:$junitVersion"
+    testCompile "junit:junit:4.12"
 }
 jar {
     manifest {

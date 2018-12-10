@@ -6,7 +6,10 @@ buildscript {
     repositories {
         jcenter()
         mavenCentral()
-		maven { url 'https://share.cqse.eu/public/maven/' }
+        mavenLocal()
+		maven {
+            url 'https://share.cqse.eu/public/maven/'
+        }
     }
 
     dependencies {
@@ -21,6 +24,10 @@ apply plugin: 'distribution'
 apply plugin: 'maven-publish'
 apply plugin: 'teamscale'
 
+repositories {
+    mavenLocal()
+}
+
 allprojects {
     apply plugin: 'groovy'
     apply plugin: 'java'
@@ -29,6 +36,10 @@ allprojects {
 
     repositories {
         jcenter()
+        mavenCentral()
+		maven {
+            url 'https://share.cqse.eu/public/maven/'
+        }
     }
 
     configurations.all {
@@ -40,14 +51,19 @@ allprojects {
     configurations {
         ivy
     }
+    test {
+        useJUnitPlatform()
+    }
     dependencies {
         compileOnly "org.codehaus.groovy:groovy-all:$groovyVersion"
         ivy         "org.apache.ivy:ivy:$ivyVersion" // for Gradle
-        testCompile "junit:junit:$junitVersion",
+        testCompile "junit:junit:4.12",
+                    "org.junit.jupiter:junit-jupiter-api:5.2.0",
                     "org.hamcrest:hamcrest-core:$hamcrestCoreVersion",
                     "org.fusesource.jansi:jansi:$jansiVersion",
                     "org.codehaus.groovy:groovy-all:$groovyVersion",
                     "com.github.stefanbirkner:system-rules:$systemRulesVersion"
+        testRuntime "org.junit.vintage:junit-vintage-engine:5.2.0"
 
     }
     tasks.withType(GroovyCompile) {
@@ -113,10 +129,10 @@ allprojects {
 
 teamscale { 
     server { 
-        url = 'localhost:8080' 
+        url = 'http://localhost:8080/' 
         userName = 'admin' 
-        userAccessToken = 'uKm0hIenT1bAfCDUUarG6wFN9vbMv7Pa' 
-        project = 'picocli' 
+        userAccessToken = 'COdDphm5froLml1ZZJJxfnaQzabj62gr' 
+        project = 'sample_proj' 
     } 
     testImpactMode = true
     
