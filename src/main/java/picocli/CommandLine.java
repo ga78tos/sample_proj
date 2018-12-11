@@ -10188,7 +10188,7 @@ public class CommandLine {
         }
         /** Returns the {@link ArgSpec} for the option which was being overwritten.
          * @since 3.8 */
-        public ArgSpec getOverwritten() { return overwrittenArg; }
+        public ArgSpec getOverwritten() { return null; }
     }
     /**
      * Exception indicating that an annotated field had a type for which no {@link ITypeConverter} was
